@@ -87,7 +87,7 @@ router.post("/verify-gst", async (req, res) => {
     if (error.response) {
       return res.status(error.response.status).json({
         success: false,
-        message: error.response.data?.message || "GST verification failed",
+        message: "error.response.data?.message" || "GST verification failed",
         error: process.env.NODE_ENV === 'development' ? error.message : undefined,
         details: process.env.NODE_ENV === 'development' ? error.response.data : undefined
       });

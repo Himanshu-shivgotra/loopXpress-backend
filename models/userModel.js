@@ -85,10 +85,39 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    registrationIp: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point']
+      },
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: true
+      },
+      city: {
+        type: String,
+        required: true
+      },
+      region: {
+        type: String,
+        required: true
+      },
+      country: {
+        type: String,
+        required: true
+      }
+    }
   },
   { timestamps: true } 
 );
 
+// Add 2dsphere index for geospatial queries
+userSchema.index({ location: '2dsphere' });
 
 userSchema.pre('save',async function(next) {
     const hashRound = 10;
